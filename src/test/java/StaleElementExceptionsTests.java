@@ -4,10 +4,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utilities.Wait;
 
 import java.time.Duration;
 public class StaleElementExceptionsTests {
@@ -67,11 +69,16 @@ public class StaleElementExceptionsTests {
         pageLink.click();
         By filterByField = By.id("task-table-filter");
 
-        //retryUsingWhileLoop_TryCatch(filterByField, "in progress");
+        Wait wait = new Wait(driver);
+        var input = wait.retryWhileLoop(filterByField);
+        input.sendKeys("in progress");
+
         driver.navigate().back();
         pageLink = driver.findElement(By.linkText("Table Data Search"));
         pageLink.click();
-       // retryUsingWhileLoop_TryCatch(filterByField, "completed");
+
+        input = wait.retryWhileLoop(filterByField);
+        input.sendKeys("completed");
     }
 
     @Test
@@ -82,11 +89,16 @@ public class StaleElementExceptionsTests {
         pageLink.click();
         By filterByField = By.id("task-table-filter");
 
-       // retryUsingForLoop_TryCatch(filterByField, "in progress");
+        Wait wait = new Wait(driver);
+        var input = wait.retryWhileLoop(filterByField);
+        input.sendKeys("in progress");
+
         driver.navigate().back();
         pageLink = driver.findElement(By.linkText("Table Data Search"));
         pageLink.click();
-        //retryUsingForLoop_TryCatch(filterByField, "completed");
+
+        input = wait.retryWhileLoop(filterByField);
+        input.sendKeys("completed");
     }
 
     @Test
@@ -110,6 +122,16 @@ public class StaleElementExceptionsTests {
         filter = wait.until(ExpectedConditions.refreshed(
                 ExpectedConditions.presenceOfElementLocated(filterByField)));
         filter.sendKeys("completed");
+    }
+
+    public void waitForAjax() {
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor)driver;
+        webDriverWait.until(d -> (Boolean) javascriptExecutor.executeScript("return window.jQuery != undefined && jQuery.active == 0"));
+    }
+
+    public void waitUntilPageLoadsCompletely() {
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor)driver;
+        webDriverWait.until(d -> javascriptExecutor.executeScript("return document.readyState").toString().equals("complete"));
     }
 
     @AfterEach
