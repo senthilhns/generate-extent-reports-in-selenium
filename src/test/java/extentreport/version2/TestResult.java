@@ -1,4 +1,4 @@
-package extentreport;
+package extentreport.version2;
 
 public enum TestResult {
     SUCCESS,

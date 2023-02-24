@@ -1,4 +1,4 @@
-package extentreport;
+package extentreport.version2;
 
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
@@ -11,7 +11,6 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.IOException;
 import java.util.Optional;
 
 public class ExtentTestListener implements TestWatcher {

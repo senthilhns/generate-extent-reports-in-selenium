@@ -1,4 +1,4 @@
-package extentreport;
+package extentreport.version2;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
