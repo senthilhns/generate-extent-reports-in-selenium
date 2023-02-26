@@ -22,3 +22,13 @@ public class TestFailLambdaTestWebDriverListener implements WebDriverListener  {
     // Usage in tests
     // webDriver = new EventFiringDecorator(new TestFailLambdaTestWebDriverListener()).decorate(webDriver);
 }
+
+
+
+
+
+
+
+
+
+

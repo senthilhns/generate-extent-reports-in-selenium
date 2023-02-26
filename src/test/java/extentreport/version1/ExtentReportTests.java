@@ -17,9 +17,7 @@ import java.io.IOException;
 @ExtendWith({TestResultListener.class, ExtentTestListener.class})
 public class ExtentReportTests {
     private static ExtentSparkReporter sparkReporter;
-
     private static ExtentReports extent;
-//    private static ExtentTest test;
 
     @BeforeAll
     public static void beforeAll() throws IOException {
@@ -35,30 +33,9 @@ public class ExtentReportTests {
         sparkReporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
         sparkReporter.config().setEncoding("UTF-8");
 
-//        sparkReporter.config(
-//                ExtentSparkReporterConfig.builder()
-//                        .theme(Theme.DARK)
-//                        .documentTitle("MyReport")
-//                        .offlineMode(true)
-//                        .build()
-//        );
-
-//        final File CONF = new File("config/spark-config.xml");
-//        ExtentSparkReporter spark = new ExtentSparkReporter("target/spark/spark.html");
-//        spark.loadXMLConfig(CONF);
-
-//        final File CONF = new File("config/spark-config.json");
-//        ExtentSparkReporter spark = new ExtentSparkReporter("target/spark/spark.html");
-//        spark.loadJSONConfig(CONF);
-
         ExecutionContext.CURRENT_DRIVER = new ChromeDriver();
         ExecutionContext.CURRENT_DRIVER.manage().window().maximize();
     }
-
-//    @BeforeEach
-//    public void setUp()  {
-//
-//    }
 
     @Test
     public void findElementByCompleteTextMatch() {

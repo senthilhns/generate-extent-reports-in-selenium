@@ -31,21 +31,6 @@ public class ExtentReportTests {
         ExecutionContext.CURRENT_SPARK_REPORTER.get().config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
         ExecutionContext.CURRENT_SPARK_REPORTER.get().config().setEncoding("UTF-8");
 
-//        sparkReporter.config(
-//                ExtentSparkReporterConfig.builder()
-//                        .theme(Theme.DARK)
-//                        .documentTitle("MyReport")
-//                        .offlineMode(true)
-//                        .build()
-//        );
-
-//        final File CONF = new File("config/spark-config.xml");
-//        ExtentSparkReporter spark = new ExtentSparkReporter("target/spark/spark.html");
-//        spark.loadXMLConfig(CONF);
-
-//        final File CONF = new File("config/spark-config.json");
-//        ExtentSparkReporter spark = new ExtentSparkReporter("target/spark/spark.html");
-//        spark.loadJSONConfig(CONF);
         ExecutionContext.CURRENT_DRIVER.set(new ChromeDriver());
         ExecutionContext.CURRENT_DRIVER.set( ExecutionContext.CURRENT_DRIVER.get());
         ExecutionContext.CURRENT_DRIVER.get().manage().window().maximize();
