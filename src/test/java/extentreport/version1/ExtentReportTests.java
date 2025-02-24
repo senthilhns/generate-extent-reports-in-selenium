@@ -11,6 +11,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import java.util.UUID;
 
 import java.io.IOException;
 
@@ -19,6 +21,41 @@ public class ExtentReportTests {
     private static ExtentSparkReporter sparkReporter;
     private static ExtentReports extent;
 
+@BeforeAll
+public static void beforeAll() throws IOException {
+    // Setup ChromeDriver using WebDriverManager
+    WebDriverManager.chromedriver().setup();
+
+    // Set up ExtentSparkReporter
+    sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + "/test-output/testReport.html");
+    extent = new ExtentReports();
+    extent.attachReporter(sparkReporter);
+    sparkReporter.config().setOfflineMode(true);
+    sparkReporter.config().setDocumentTitle("Simple Automation Report");
+    sparkReporter.config().setReportName("Test Report");
+    sparkReporter.config().setTheme(Theme.STANDARD);
+    sparkReporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
+    sparkReporter.config().setEncoding("UTF-8");
+
+    // ChromeOptions for stability
+    ChromeOptions options = new ChromeOptions();
+
+    options.addArguments("--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID());
+
+    options.addArguments("--headless=new");
+
+    // ✅ Improve stability in Linux environments
+    options.addArguments("--no-sandbox");
+    options.addArguments("--disable-dev-shm-usage");
+    options.addArguments("--disable-gpu");
+
+    // Initialize ChromeDriver with options
+    ExecutionContext.CURRENT_DRIVER = new ChromeDriver(options);
+    ExecutionContext.CURRENT_DRIVER.manage().window().maximize();
+}
+
+
+/*
     @BeforeAll
     public static void beforeAll() throws IOException {
         WebDriverManager.chromedriver().setup();
@@ -36,6 +73,7 @@ public class ExtentReportTests {
         ExecutionContext.CURRENT_DRIVER = new ChromeDriver();
         ExecutionContext.CURRENT_DRIVER.manage().window().maximize();
     }
+*/
 
     @Test
     public void findElementByCompleteTextMatch() {

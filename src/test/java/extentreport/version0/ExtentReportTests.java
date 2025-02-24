@@ -13,6 +13,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import java.util.UUID;
 
 import java.io.IOException;
 
@@ -22,6 +24,31 @@ public class ExtentReportTests {
     private static WebDriver driver;
     private static ExtentTest extentTest;
 
+
+@BeforeAll
+public static void beforeAll() throws IOException {
+    WebDriverManager.chromedriver().setup();
+    extent = new ExtentReports();
+    sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + "/test-output/testReport.html");
+    extent.attachReporter(sparkReporter);
+    sparkReporter.config().setOfflineMode(true);
+    sparkReporter.config().setDocumentTitle("Simple Automation Report");
+    sparkReporter.config().setReportName("Test Report");
+    sparkReporter.config().setTheme(Theme.STANDARD);
+    sparkReporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
+    sparkReporter.config().setEncoding("UTF-8");
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID());
+    options.addArguments("--headless=new");
+    options.addArguments("--no-sandbox");
+    options.addArguments("--disable-dev-shm-usage");
+    options.addArguments("--disable-gpu");
+    driver = new ChromeDriver(options);
+    driver.manage().window().maximize();
+}
+
+
+/*
     @BeforeAll
     public static void beforeAll() throws IOException {
         WebDriverManager.chromedriver().setup();
@@ -39,6 +66,7 @@ public class ExtentReportTests {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
+*/
 
 //    @BeforeEach
 //    public void setUp()  {
